@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal - Campus Connect</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Mobile Navigation Bar -->
+    <header class="mobile-top-nav">
+        <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+            <i data-lucide="menu"></i>
+        </button>
+        <div class="mobile-brand">
+            <div class="mobile-brand-icon">
+                <i data-lucide="graduation-cap"></i>
+            </div>
+            <span>Campus Connect</span>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm" onclick="showSection('report')">
+            <i data-lucide="plus"></i> Report
+        </button>
+    </header>
+
+    <!-- Sidebar Backdrop for Mobile -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand-icon">
+                    <i data-lucide="graduation-cap"></i>
+                </div>
+                <div class="sidebar-brand-text">
+                    <h2>Campus Connect</h2>
+                    <p>Student Workspace</p>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" data-section="dashboard">
+                        <i data-lucide="layout-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="report">
+                        <i data-lucide="plus-circle"></i>
+                        <span>Report Issue</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="tickets">
+                        <i data-lucide="ticket"></i>
+                        <span>My Tickets</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="profile">
+                        <i data-lucide="user"></i>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="logoutBtn">
+                        <i data-lucide="log-out"></i>
+                        <span>Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user-card">
+                    <div class="user-avatar" id="sidebarUserAvatar">S</div>
+                    <div class="user-details" style="overflow: hidden;">
+                        <h3 id="sidebarUserName" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Student</h3>
+                        <p id="sidebarUserDept">Department</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="top-bar-left">
+                    <h1 id="pageTitle">Dashboard</h1>
+                    <p>Track, manage, and submit campus infrastructure issues</p>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">S</div>
+                    <div class="user-details">
+                        <h3 id="userName">Student Name</h3>
+                        <p id="userDept">Department</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <section id="dashboardSection" class="content-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i data-lucide="file-text"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="totalTickets">0</h3>
+                            <p>Total Submitted</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange">
+                            <i data-lucide="clock"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="pendingTickets">0</h3>
+                            <p>In Progress / Pending</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i data-lucide="check-circle-2"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="resolvedTickets">0</h3>
+                            <p>Resolved</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i data-lucide="history"></i> Recent Tickets</h2>
+                        <button class="btn btn-primary btn-sm" onclick="showSection('report')">
+                            <i data-lucide="plus"></i> New Ticket
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table id="recentTicketsTable">
+                            <thead>
+                                <tr>
+                                    <th>Ticket ID</th>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                                        Loading tickets...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Report Issue Section -->
+            <section id="reportSection" class="content-section" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i data-lucide="file-plus"></i> Report New Issue</h2>
+                    </div>
+                    <form id="reportIssueForm">
+                        <div class="form-group">
+                            <label for="issueTitle">Issue Title *</label>
+                            <input type="text" id="issueTitle" required placeholder="e.g., Broken projector in Room 301">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="issueCategory">Category *</label>
+                                <select id="issueCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="1">Infrastructure</option>
+                                    <option value="2">Electrical</option>
+                                    <option value="3">Plumbing</option>
+                                    <option value="4">Cleanliness</option>
+                                    <option value="5">IT & Network</option>
+                                    <option value="6">Safety & Security</option>
+                                    <option value="7">Classroom</option>
+                                    <option value="8">Hostel</option>
+                                    <option value="9">Transport</option>
+                                    <option value="10">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="issuePriority">Priority Level *</label>
+                                <select id="issuePriority" required>
+                                    <option value="medium">Medium</option>
+                                    <option value="low">Low</option>
+                                    <option value="high">High</option>
+                                    <option value="urgent">Urgent</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="issueLocation">Exact Location *</label>
+                            <input type="text" id="issueLocation" required placeholder="e.g., Main Academic Block, 2nd Floor, Room 204">
+                        </div>
+                        <div class="form-group">
+                            <label for="issueDescription">Detailed Description *</label>
+                            <textarea id="issueDescription" rows="4" required placeholder="Describe the problem, severity, and any hazards..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Attach Evidence Photo (Optional)</label>
+                            <div class="upload-dropzone" id="uploadDropzone">
+                                <input type="file" id="issuePhoto" accept="image/jpeg,image/png,image/gif">
+                                <div class="upload-icon-circle">
+                                    <i data-lucide="upload-cloud"></i>
+                                </div>
+                                <div class="upload-title">Drag & drop photo here or <span>browse device</span></div>
+                                <div class="upload-hint">PNG, JPEG, GIF up to 5MB</div>
+                            </div>
+                            <div class="upload-preview-container" id="uploadPreviewContainer">
+                                <img src="" alt="Thumbnail" class="upload-thumbnail" id="uploadThumbnail">
+                                <div class="upload-preview-details">
+                                    <div class="upload-preview-name" id="uploadPreviewName">filename.jpg</div>
+                                    <div class="upload-preview-meta" id="uploadPreviewMeta">0 KB</div>
+                                </div>
+                                <button type="button" class="btn-remove-preview" id="btnRemovePreview">
+                                    <i data-lucide="trash-2"></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-primary">
+                                <i data-lucide="send"></i> Submit Ticket
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="document.getElementById('reportIssueForm').reset()">
+                                <i data-lucide="rotate-ccw"></i> Clear Form
+                            </button>
+                        </div>
+                        <div id="reportMessage" class="message"></div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- My Tickets Section -->
+            <section id="ticketsSection" class="content-section" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i data-lucide="ticket"></i> My Submitted Tickets</h2>
+                        <div style="display: flex; gap: 10px;">
+                            <select id="filterStatus" style="padding: 8px 12px; border-radius: 8px; border: 1px solid var(--card-border); background: var(--bg-input); color: var(--text-primary);">
+                                <option value="">All Statuses</option>
+                                <option value="submitted">Submitted</option>
+                                <option value="assigned">Assigned</option>
+                                <option value="in_progress">In Progress</option>
+                                <option value="resolved">Resolved</option>
+                                <option value="closed">Closed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table id="allTicketsTable">
+                            <thead>
+                                <tr>
+                                    <th>Ticket ID</th>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="7" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                                        Loading tickets...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profileSection" class="content-section" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i data-lucide="user-check"></i> Student Profile</h2>
+                    </div>
+                    <div style="max-width: 600px;">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="profileName" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" id="profileUsername" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>University Email</label>
+                            <input type="email" id="profileEmail" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="profilePhone" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Department / Major</label>
+                            <input type="text" id="profileDepartment" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Portal Role</label>
+                            <input type="text" value="Student" readonly>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Ticket Detail Modal -->
+    <div id="ticketModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Ticket Details</h2>
+                <button class="close-modal" onclick="closeTicketModal()">&times;</button>
+            </div>
+            <div id="ticketDetails">
+                <!-- Ticket details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/toast.js"></script>
+    <script src="js/student.js"></script>
+    <script>
+        // Initialize Lucide icons on load
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+
+        // Mobile Drawer Toggle
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+
+        function toggleMobileSidebar() {
+            if (sidebar) sidebar.classList.toggle('open');
+            if (backdrop) backdrop.classList.toggle('active');
+        }
+
+        if (menuBtn) {
+            menuBtn.addEventListener('click', toggleMobileSidebar);
+        }
+        if (backdrop) {
+            backdrop.addEventListener('click', toggleMobileSidebar);
+        }
+
+        // Auto close drawer when nav-link clicked on mobile
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (sidebar) sidebar.classList.remove('open');
+                if (backdrop) backdrop.classList.remove('active');
+            });
+        });
+
+        // Mirror user details into sidebar footer
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const nameEl = document.getElementById('userName');
+                const deptEl = document.getElementById('userDept');
+                const avatarEl = document.getElementById('userAvatar');
+                if (nameEl && document.getElementById('sidebarUserName')) {
+                    document.getElementById('sidebarUserName').textContent = nameEl.textContent;
+                }
+                if (deptEl && document.getElementById('sidebarUserDept')) {
+                    document.getElementById('sidebarUserDept').textContent = deptEl.textContent;
+                }
+                if (avatarEl && document.getElementById('sidebarUserAvatar')) {
+                    document.getElementById('sidebarUserAvatar').textContent = avatarEl.textContent;
+                }
+                if (window.lucide) lucide.createIcons();
+            }, 300);
+        });
+    </script>
+</body>
+</html>

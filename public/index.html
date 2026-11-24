@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Connect - Sign In</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="brand-icon">
+                    <i data-lucide="graduation-cap"></i>
+                </div>
+                <h1>Campus Connect</h1>
+                <p>Campus issue reporting, tracking & resolution</p>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="login">
+                    <i data-lucide="log-in"></i> Sign In
+                </button>
+                <button class="tab-btn" data-tab="register">
+                    <i data-lucide="user-plus"></i> Register
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active">
+                <div class="form-group">
+                    <label for="loginUsername">Username or Email</label>
+                    <input type="text" id="loginUsername" name="username" required placeholder="Enter username or email">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="password" required placeholder="Enter your password">
+                </div>
+                <div class="form-group">
+                    <label for="loginRole">Account Role</label>
+                    <select id="loginRole" name="role" required>
+                        <option value="">Select your role</option>
+                        <option value="student">Student</option>
+                        <option value="staff">Staff Member</option>
+                        <option value="admin">Administrator</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i data-lucide="arrow-right"></i> Sign In to Account
+                </button>
+                <div id="loginMessage" class="message"></div>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="auth-form">
+                <div class="form-group">
+                    <label for="regFullName">Full Name</label>
+                    <input type="text" id="regFullName" name="fullName" required placeholder="e.g. Alex Johnson">
+                </div>
+                <div class="form-group">
+                    <label for="regUsername">Username</label>
+                    <input type="text" id="regUsername" name="username" required placeholder="Choose a username">
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">University Email</label>
+                    <input type="email" id="regEmail" name="email" required placeholder="alex@campus.edu">
+                </div>
+                <div class="form-group">
+                    <label for="regPhone">Phone Number</label>
+                    <input type="tel" id="regPhone" name="phone" placeholder="+1 (555) 000-0000">
+                </div>
+                <div class="form-group">
+                    <label for="regDepartment">Department / Program</label>
+                    <input type="text" id="regDepartment" name="department" required placeholder="e.g. Computer Science">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" name="password" required placeholder="At least 6 chars">
+                    </div>
+                    <div class="form-group">
+                        <label for="regConfirmPassword">Confirm</label>
+                        <input type="password" id="regConfirmPassword" name="confirmPassword" required placeholder="Confirm password">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i data-lucide="user-check"></i> Register as Student
+                </button>
+                <div id="registerMessage" class="message"></div>
+            </form>
+
+            <div class="demo-credentials">
+                <h4><i data-lucide="sparkles"></i> Quick-Fill Demo Accounts</h4>
+                <div class="demo-badges">
+                    <button type="button" class="demo-pill" onclick="quickFill('student1', 'student123', 'student')">
+                        <strong>Student</strong>
+                        <span>student1 &bull; student123</span>
+                    </button>
+                    <button type="button" class="demo-pill" onclick="quickFill('staff1', 'staff123', 'staff')">
+                        <strong>Staff</strong>
+                        <span>staff1 &bull; staff123</span>
+                    </button>
+                    <button type="button" class="demo-pill" onclick="quickFill('admin', 'admin123', 'admin')">
+                        <strong>Admin</strong>
+                        <span>admin &bull; admin123</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/toast.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Initialize Lucide icons
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+
+        // Quick fill demo credentials
+        function quickFill(user, pass, role) {
+            // Switch to login tab if not active
+            const loginTabBtn = document.querySelector('.tab-btn[data-tab="login"]');
+            if (loginTabBtn) loginTabBtn.click();
+
+            document.getElementById('loginUsername').value = user;
+            document.getElementById('loginPassword').value = pass;
+            document.getElementById('loginRole').value = role;
+
+            const msg = document.getElementById('loginMessage');
+            if (msg) {
+                msg.className = 'message success';
+                msg.style.display = 'flex';
+                msg.innerHTML = '<i data-lucide="check-circle-2"></i> Filled credentials for <strong>' + role.toUpperCase() + '</strong>. Click "Sign In"!';
+                if (window.lucide) lucide.createIcons();
+            }
+        }
+    </script>
+</body>
+</html>

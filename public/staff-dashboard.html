@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Portal - Campus Connect</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Mobile Navigation Bar -->
+    <header class="mobile-top-nav">
+        <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+            <i data-lucide="menu"></i>
+        </button>
+        <div class="mobile-brand">
+            <div class="mobile-brand-icon">
+                <i data-lucide="shield-check"></i>
+            </div>
+            <span>Staff Portal</span>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm" onclick="showSection('assigned')">
+            <i data-lucide="clipboard-list"></i> Assigned
+        </button>
+    </header>
+
+    <!-- Sidebar Backdrop for Mobile -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand-icon">
+                    <i data-lucide="shield-check"></i>
+                </div>
+                <div class="sidebar-brand-text">
+                    <h2>Campus Connect</h2>
+                    <p>Staff Operations</p>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" data-section="dashboard">
+                        <i data-lucide="layout-dashboard"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="assigned">
+                        <i data-lucide="clipboard-check"></i>
+                        <span>Assigned Tickets</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="all">
+                        <i data-lucide="layers"></i>
+                        <span>All Tickets</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-section="profile">
+                        <i data-lucide="user"></i>
+                        <span>My Profile</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="logoutBtn">
+                        <i data-lucide="log-out"></i>
+                        <span>Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user-card">
+                    <div class="user-avatar" id="sidebarUserAvatar">S</div>
+                    <div class="user-details" style="overflow: hidden;">
+                        <h3 id="sidebarUserName" style="white-space: nowrap; text-overflow: ellipsis; overflow: hidden;">Staff</h3>
+                        <p id="sidebarUserDept">Operations</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="top-bar-left">
+                    <h1 id="pageTitle">Dashboard</h1>
+                    <p>Resolution management, status updates & assigned tasks</p>
+                </div>
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">S</div>
+                    <div class="user-details">
+                        <h3 id="userName">Staff Name</h3>
+                        <p id="userDept">Department</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <section id="dashboardSection" class="content-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i data-lucide="ticket"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="assignedCount">0</h3>
+                            <p>Assigned to Me</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange">
+                            <i data-lucide="clock"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="inProgressCount">0</h3>
+                            <p>In Progress</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i data-lucide="check-circle-2"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="resolvedCount">0</h3>
+                            <p>Resolved</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red">
+                            <i data-lucide="alert-octagon"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3 id="urgentCount">0</h3>
+                            <p>Urgent Priority</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i data-lucide="clock-4"></i> Recent Assigned Tickets</h2>
+                        <button class="btn btn-primary btn-sm" onclick="showSection('assigned')">
+                            <i data-lucide="arrow-right"></i> View All
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table id="dashboardTicketsTable">
+                            <thead>
+                                <tr>
+                                    <th>Ticket ID</th>
+                                    <th>Title</th>
+                                    <th>Student</th>
+                                    <th>Category</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                                        No tickets assigned yet
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Assigned Tickets Section -->
+            <section id="assignedSection" class="content-section" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i data-lucide="clipboard-check"></i> My Assigned Tickets</h2>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <select id="filterAssignedStatus" style="padding: 8px 12px; border-radius: 8px; border: 1px solid var(--card-border); background: var(--bg-input); color: var(--text-primary);">
+                                <option value="">All Statuses</option>
+                                <option value="assigned">Assigned</option>
+                                <option value="in_progress">In Progress</option>
+                                <option value="resolved">Resolved</option>
+                            </select>
+                            <select id="filterPriority" style="padding: 8px 12px; border-radius: 8px; border: 1px solid var(--card-border); background: var(--bg-input); color: var(--text-primary);">
+                                <option value="">All Priorities</option>
+                                <option value="urgent">Urgent</option>
+                                <option value="high">High</option>
+                                <option value="medium">Medium</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table id="assignedTicketsTable">
+                            <thead>
+                                <tr>
+                                    <th>Ticket ID</th>
+                                    <th>Title</th>
+                                    <th>Student</th>
+                                    <th>Category</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="8" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                                        Loading tickets...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- All Tickets Section -->
+            <section id="allSection" class="content-section" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i data-lucide="layers"></i> All Campus Tickets</h2>
+                        <input type="text" id="searchTickets" placeholder="Search by title, student, or id..." 
+                               style="padding: 8px 14px; border-radius: 8px; border: 1px solid var(--card-border); background: var(--bg-input); color: var(--text-primary); width: 280px;">
+                    </div>
+                    <div class="table-container">
+                        <table id="allTicketsTable">
+                            <thead>
+                                <tr>
+                                    <th>Ticket ID</th>
+                                    <th>Title</th>
+                                    <th>Student</th>
+                                    <th>Category</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Assigned To</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="9" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                                        Loading tickets...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profileSection" class="content-section" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i data-lucide="user-check"></i> Staff Profile</h2>
+                    </div>
+                    <div style="max-width: 600px;">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="profileName" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" id="profileUsername" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Official Email</label>
+                            <input type="email" id="profileEmail" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="profilePhone" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Department / Team</label>
+                            <input type="text" id="profileDepartment" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Portal Role</label>
+                            <input type="text" value="Staff Member" readonly>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Update Ticket Modal -->
+    <div id="updateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Update Ticket Status</h2>
+                <button class="close-modal" onclick="closeUpdateModal()">&times;</button>
+            </div>
+            <form id="updateTicketForm">
+                <input type="hidden" id="updateTicketId">
+                <div class="form-group">
+                    <label for="updateStatus">Status *</label>
+                    <select id="updateStatus" required>
+                        <option value="assigned">Assigned</option>
+                        <option value="in_progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="updateNotes">Work Progress Notes *</label>
+                    <textarea id="updateNotes" rows="3" required placeholder="Describe what steps have been completed..."></textarea>
+                </div>
+                <div class="form-group" id="resolutionGroup" style="display: none;">
+                    <label for="resolutionNotes">Resolution Details *</label>
+                    <textarea id="resolutionNotes" rows="3" placeholder="Provide full details of how the issue was fixed..."></textarea>
+                </div>
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i data-lucide="check"></i> Update Ticket
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeUpdateModal()">
+                        <i data-lucide="x"></i> Cancel
+                    </button>
+                </div>
+                <div id="updateMessage" class="message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Ticket Detail Modal -->
+    <div id="ticketModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Ticket Details</h2>
+                <button class="close-modal" onclick="closeTicketModal()">&times;</button>
+            </div>
+            <div id="ticketDetails">
+                <!-- Ticket details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/toast.js"></script>
+    <script src="js/staff.js"></script>
+    <script>
+        // Initialize Lucide icons on load
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+
+        // Mobile Drawer Toggle
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('sidebarBackdrop');
+
+        function toggleMobileSidebar() {
+            if (sidebar) sidebar.classList.toggle('open');
+            if (backdrop) backdrop.classList.toggle('active');
+        }
+
+        if (menuBtn) {
+            menuBtn.addEventListener('click', toggleMobileSidebar);
+        }
+        if (backdrop) {
+            backdrop.addEventListener('click', toggleMobileSidebar);
+        }
+
+        // Auto close drawer when nav-link clicked on mobile
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (sidebar) sidebar.classList.remove('open');
+                if (backdrop) backdrop.classList.remove('active');
+            });
+        });
+
+        // Mirror user details into sidebar footer
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const nameEl = document.getElementById('userName');
+                const deptEl = document.getElementById('userDept');
+                const avatarEl = document.getElementById('userAvatar');
+                if (nameEl && document.getElementById('sidebarUserName')) {
+                    document.getElementById('sidebarUserName').textContent = nameEl.textContent;
+                }
+                if (deptEl && document.getElementById('sidebarUserDept')) {
+                    document.getElementById('sidebarUserDept').textContent = deptEl.textContent;
+                }
+                if (avatarEl && document.getElementById('sidebarUserAvatar')) {
+                    document.getElementById('sidebarUserAvatar').textContent = avatarEl.textContent;
+                }
+                if (window.lucide) lucide.createIcons();
+            }, 300);
+        });
+    </script>
+</body>
+</html>
